@@ -1,14 +1,14 @@
 //
-//  RDAppDelegate.m
+//  AppDelegate.m
 //  RDMultiRangeSlider
 //
-//  Created by Richard Das on 18/3/13.
+//  Created by Richard Das on 25/3/13.
 //  Copyright (c) 2013 RNA Productions, Ltd. All rights reserved.
 //
 
 #import "AppDelegate.h"
 
-#import "MainViewController.h"
+#import "ViewController.h"
 
 @implementation AppDelegate
 
@@ -16,7 +16,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
+    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;

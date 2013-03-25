@@ -1,21 +1,20 @@
 //
-//  RDViewController.m
+//  ViewController.m
 //  RDMultiRangeSlider
 //
-//  Created by Richard Das on 18/3/13.
+//  Created by Richard Das on 25/3/13.
 //  Copyright (c) 2013 RNA Productions, Ltd. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "ViewController.h"
 
 #import "RDMultiRangeSlider.h"
 
-
-@interface MainViewController ()
+@interface ViewController ()
 
 @end
 
-@implementation MainViewController
+@implementation ViewController
 
 - (void)viewDidLoad
 {

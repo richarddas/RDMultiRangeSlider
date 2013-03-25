@@ -339,7 +339,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat incrementValue = range/self.trackWidth;
-    CGFloat ret = pos * incrementValue; // (pos - self.minThumb.image.size.width) * incrementValue;
+    CGFloat ret = pos * incrementValue;
     return ret;
 }
 
