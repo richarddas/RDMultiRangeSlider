@@ -233,25 +233,6 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 }
 
 
-//- (UIImage *)trackBackgroundImage {
-//    if(!_trackBackgroundImage) {
-//        UIImage *image = [[UIImage imageNamed:@"slider-track-background"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 5, 4, 5)];
-//        _trackBackgroundImage = image;
-//    }
-//    return _trackBackgroundImage;
-//}
-//
-//- (UIImage *)trackFillImage {
-//    if(!_trackFillImage) {
-//        UIImage *image = [[UIImage imageNamed:@"slider-track-fill"] resizableImageWithCapInsets:UIEdgeInsetsMake(4, 5, 4, 5)];
-//        _trackFillImage = image;
-//    }
-//    return _trackFillImage;
-//}
-
-
-
-
 #pragma mark - UIGestureRecognizer
 
 

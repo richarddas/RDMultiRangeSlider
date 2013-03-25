@@ -102,8 +102,8 @@
 		782EA78D17006165003936E2 /* RDMultiRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
-				782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */,
 				782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */,
+				782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */,
 				782EA7AC170061C9003936E2 /* Resources */,
 				782EA79617006165003936E2 /* AppDelegate.h */,
 				782EA79717006165003936E2 /* AppDelegate.m */,
