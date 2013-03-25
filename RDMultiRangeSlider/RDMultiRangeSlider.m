@@ -109,10 +109,10 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 
 -(void)layoutSubviews
 {
-    CGFloat minXPos = [self posForValue:self.selectedMinValue]; //  + (trackHPadding/4.f);
+    CGFloat minXPos = [self posForValue:self.selectedMinValue];
     self.minThumb.center = CGPointMake( minXPos , self.track.center.y);
     
-    CGFloat maxXPos = [self posForValue:self.selectedMaxValue]; //  + (trackHPadding/4.f);
+    CGFloat maxXPos = [self posForValue:self.selectedMaxValue];
     self.maxThumb.center = CGPointMake( maxXPos , self.track.center.y);
     
 	self.trackSelected.frame = CGRectMake(
@@ -311,8 +311,8 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 }
 
 // delegate method
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{    
     return YES;
 }
 
@@ -338,8 +338,8 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 -(CGFloat)valueForPos:(CGFloat)pos
 {
     CGFloat range = self.maximumValue - self.minimumValue;
-    CGFloat incrementValue = self.trackWidth/range;
-    CGFloat ret = (pos - self.minThumb.image.size.width) * incrementValue;
+    CGFloat incrementValue = range/self.trackWidth;
+    CGFloat ret = pos * incrementValue; // (pos - self.minThumb.image.size.width) * incrementValue;
     return ret;
 }
 
@@ -383,9 +383,10 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 // override setter to limit range and call setNeedsLayout
 - (void)setSelectedMinValue:(CGFloat)selectedMinValue
 {
+    CGFloat pad = [self valueForPos:self.minThumbImage.size.width];
     if ( selectedMinValue <= self.minimumValue ) {
         _selectedMinValue = self.minimumValue;
-    } else if (selectedMinValue >= self.minimumValue && selectedMinValue <= self.selectedMaxValue /* - self.minimumSpacing */) {
+    } else if (selectedMinValue >= self.minimumValue && selectedMinValue <= self.selectedMaxValue - pad) {
         _selectedMinValue = selectedMinValue;
     }
     [self setNeedsLayout];
@@ -395,9 +396,10 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 // override setter to limit range and call setNeedsLayout
 - (void)setSelectedMaxValue:(CGFloat)selectedMaxValue
 {
+    CGFloat pad = [self valueForPos:self.minThumbImage.size.width];
     if ( selectedMaxValue >= self.maximumValue ) {
         _selectedMaxValue = self.maximumValue;
-    } else if (selectedMaxValue <= self.maximumValue && selectedMaxValue > self.selectedMinValue /* + self.minimumSpacing */) {
+    } else if (selectedMaxValue <= self.maximumValue && selectedMaxValue > self.selectedMinValue + pad) {
         _selectedMaxValue = selectedMaxValue;
     }
     [self setNeedsLayout];
