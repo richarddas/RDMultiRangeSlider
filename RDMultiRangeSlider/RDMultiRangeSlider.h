@@ -32,4 +32,8 @@
 
 - (void)setImageForMaximumThumb:(UIImage *)image forState:(UIControlState)state;
 
+- (CGPoint)minHandleCenterPosition;
+
+- (CGPoint)maxHandleCenterPosition;
+
 @end

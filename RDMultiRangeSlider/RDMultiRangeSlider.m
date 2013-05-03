@@ -14,8 +14,8 @@
 
 @property (readonly, nonatomic) CGFloat trackWidth;
 
-@property (nonatomic, strong) UIImageView *minThumb;
-@property (nonatomic, strong) UIImageView *maxThumb;
+@property (nonatomic, strong) UIImageView *minHandle;
+@property (nonatomic, strong) UIImageView *maxHandle;
 @property (nonatomic, strong) UIImageView *track;
 @property (nonatomic, strong) UIImageView *trackSelected;
 
@@ -84,41 +84,41 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     [self setImageForTrackSelected:self.trackSelectedImage];
     [self addSubview:self.trackSelected];
 
-    self.minThumb = [[UIImageView alloc] init];
-    self.minThumb.contentMode = UIViewContentModeCenter;
+    self.minHandle = [[UIImageView alloc] init];
+    self.minHandle.contentMode = UIViewContentModeCenter;
     [self setImageForMinimumThumb:self.minThumbImage forState:UIControlStateNormal];
     [self setImageForMinimumThumb:self.minThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *minPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(minPanGestureEngaged:)];
     minPanGesture.delegate = self;
-    [self.minThumb addGestureRecognizer:minPanGesture];
-    self.minThumb.userInteractionEnabled = YES;
-    [self addSubview:self.minThumb];
+    [self.minHandle addGestureRecognizer:minPanGesture];
+    self.minHandle.userInteractionEnabled = YES;
+    [self addSubview:self.minHandle];
     
     
-    self.maxThumb = [[UIImageView alloc] init];
-    self.maxThumb.contentMode = UIViewContentModeCenter;
+    self.maxHandle = [[UIImageView alloc] init];
+    self.maxHandle.contentMode = UIViewContentModeCenter;
     [self setImageForMaximumThumb:self.maxThumbImage forState:UIControlStateNormal];
     [self setImageForMaximumThumb:self.maxThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *maxPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(maxPanGestureEngaged:)];
     maxPanGesture.delegate = self;
-    [self.maxThumb addGestureRecognizer:maxPanGesture];
-    self.maxThumb.userInteractionEnabled = YES;
-    [self addSubview:self.maxThumb];
+    [self.maxHandle addGestureRecognizer:maxPanGesture];
+    self.maxHandle.userInteractionEnabled = YES;
+    [self addSubview:self.maxHandle];
 }
 
 
 -(void)layoutSubviews
 {
     CGFloat minXPos = [self posForValue:self.selectedMinValue];
-    self.minThumb.center = CGPointMake( minXPos , self.track.center.y);
+    self.minHandle.center = CGPointMake( minXPos , self.track.center.y);
     
     CGFloat maxXPos = [self posForValue:self.selectedMaxValue];
-    self.maxThumb.center = CGPointMake( maxXPos , self.track.center.y);
+    self.maxHandle.center = CGPointMake( maxXPos , self.track.center.y);
     
 	self.trackSelected.frame = CGRectMake(
-                                          self.minThumb.center.x,
+                                          self.minHandle.center.x,
                                           (CGRectGetHeight( self.frame ) - self.trackSelected.image.size.height)/2.f,
-                                          self.maxThumb.center.x - self.minThumb.center.x,
+                                          self.maxHandle.center.x - self.minHandle.center.x,
                                           self.trackSelected.image.size.height // match image
                                           );
 }
@@ -153,12 +153,12 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     if( state == UIControlStateNormal )
     {
-        [self.minThumb setImage:image];
+        [self.minHandle setImage:image];
     } else {
-        [self.minThumb setHighlightedImage:image ];
+        [self.minHandle setHighlightedImage:image ];
     }
     // make sure it's at least 44x44
-    self.minThumb.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.minThumb.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.minThumb.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
+    self.minHandle.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
 }
 
 
@@ -166,12 +166,25 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     if( state == UIControlStateNormal )
     {
-        [self.maxThumb setImage:image];
+        [self.maxHandle setImage:image];
     } else {
-        [self.maxThumb setHighlightedImage:image ];
+        [self.maxHandle setHighlightedImage:image ];
     }
     // make sure it's at least 44x44
-    self.maxThumb.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.maxThumb.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.maxThumb.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
+    self.maxHandle.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
+}
+
+
+#pragma mark - public Handle properties
+
+- (CGPoint)minHandleCenterPosition
+{
+    return self.minHandle.center;
+}
+
+- (CGPoint)maxHandleCenterPosition
+{
+    return self.maxHandle.center;
 }
 
 
@@ -241,7 +254,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
-        self.minThumb.highlighted = YES;
+        self.minHandle.highlighted = YES;
     }
     else if (panGesture.state == UIGestureRecognizerStateChanged)
     {
@@ -257,7 +270,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     else if (panGesture.state == UIGestureRecognizerStateCancelled ||
              panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateCancelled) {
-        self.minThumb.highlighted = NO;
+        self.minHandle.highlighted = NO;
         self.selectedMinValue = [self roundValueToStepValue:self.selectedMinValue];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
@@ -269,7 +282,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
-        self.maxThumb.highlighted = YES;
+        self.maxHandle.highlighted = YES;
     }
     if (panGesture.state == UIGestureRecognizerStateChanged) {
         
@@ -285,7 +298,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     else if (panGesture.state == UIGestureRecognizerStateCancelled ||
              panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateCancelled) {
-        self.maxThumb.highlighted = NO;
+        self.maxHandle.highlighted = NO;
         self.selectedMaxValue = [self roundValueToStepValue:self.selectedMinValue];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
@@ -303,7 +316,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 // the inset width
 - (CGFloat)trackWidth
 {
-    return (CGRectGetWidth( self.frame ) - (_minThumb.image.size.width/2.f) - (_maxThumb.image.size.width/2.f));
+    return (CGRectGetWidth( self.frame ) - (self.minHandle.image.size.width/2.f) - (self.maxHandle.image.size.width/2.f));
 }
 
 
@@ -311,7 +324,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     CGFloat range = self.maximumValue - self.minimumValue;
     CGFloat incrementValue = self.trackWidth/range;
-    CGFloat ret = (self.minThumb.image.size.width/2.f) + ((value - self.minimumValue) * incrementValue);
+    CGFloat ret = (self.minHandle.image.size.width/2.f) + ((value - self.minimumValue) * incrementValue);
     return ret;
 }
 
