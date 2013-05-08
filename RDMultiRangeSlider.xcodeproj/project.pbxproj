@@ -46,8 +46,8 @@
 		782EA79F17006166003936E2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		782EA7A017006166003936E2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		782EA7A317006166003936E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
-		782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDMultiRangeSlider.m; sourceTree = "<group>"; };
-		782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDMultiRangeSlider.h; sourceTree = "<group>"; };
+		782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RDMultiRangeSlider.m; path = Classes/RDMultiRangeSlider.m; sourceTree = "<group>"; };
+		782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RDMultiRangeSlider.h; path = Classes/RDMultiRangeSlider.h; sourceTree = "<group>"; };
 		782EA7AD170061C9003936E2 /* bar-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-background.png"; sourceTree = "<group>"; };
 		782EA7AE170061C9003936E2 /* bar-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-background@2x.png"; sourceTree = "<group>"; };
 		782EA7AF170061C9003936E2 /* bar-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-highlight.png"; sourceTree = "<group>"; };
@@ -102,8 +102,7 @@
 		782EA78D17006165003936E2 /* RDMultiRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
-				782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */,
-				782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */,
+				78D06F9F173A59270084886C /* Classes */,
 				782EA7AC170061C9003936E2 /* Resources */,
 				782EA79617006165003936E2 /* AppDelegate.h */,
 				782EA79717006165003936E2 /* AppDelegate.m */,
@@ -142,6 +141,15 @@
 				782EA7B4170061C9003936E2 /* handle@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		78D06F9F173A59270084886C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */,
+				782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

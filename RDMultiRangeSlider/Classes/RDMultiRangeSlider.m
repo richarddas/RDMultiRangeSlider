@@ -90,6 +90,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     [self setImageForMinimumThumb:self.minThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *minPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(minPanGestureEngaged:)];
     minPanGesture.delegate = self;
+    minPanGesture.cancelsTouchesInView = YES;
     [self.minHandle addGestureRecognizer:minPanGesture];
     self.minHandle.userInteractionEnabled = YES;
     [self addSubview:self.minHandle];
@@ -101,6 +102,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     [self setImageForMaximumThumb:self.maxThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *maxPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(maxPanGestureEngaged:)];
     maxPanGesture.delegate = self;
+    maxPanGesture.cancelsTouchesInView = YES;
     [self.maxHandle addGestureRecognizer:maxPanGesture];
     self.maxHandle.userInteractionEnabled = YES;
     [self addSubview:self.maxHandle];
@@ -278,14 +280,14 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 
 
 - (void)maxPanGestureEngaged:(UIGestureRecognizer *)gesture
-{    
+{
     UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         self.maxHandle.highlighted = YES;
     }
-    if (panGesture.state == UIGestureRecognizerStateChanged) {
-        
+    else if (panGesture.state == UIGestureRecognizerStateChanged)
+    {
         CGPoint pointInView = [panGesture translationInView:self];
         
         CGFloat range = self.maximumValue - self.minimumValue;
@@ -300,6 +302,40 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
              panGesture.state == UIGestureRecognizerStateCancelled) {
         self.maxHandle.highlighted = NO;
         self.selectedMaxValue = [self roundValueToStepValue:self.selectedMinValue];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
+}
+
+
+- (void)trackPanGestureEngaged:(UIGestureRecognizer *)gesture
+{
+    UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
+    
+    if (panGesture.state == UIGestureRecognizerStateBegan) {
+        // self.maxHandle.highlighted = YES;
+    }
+    else if (panGesture.state == UIGestureRecognizerStateChanged)
+    {
+        
+        CGPoint pointInView = [panGesture translationInView:self];
+
+        CGFloat range = self.maximumValue - self.minimumValue;
+        CGFloat trackPercentageChange = (pointInView.x / self.trackWidth)*100.f;
+        
+        CGFloat change = (trackPercentageChange/100.f) * range;
+        NSLog( @" value: %f", change );
+
+        self.selectedMaxValue += change;
+        self.selectedMinValue += change;
+        
+        [panGesture setTranslation:CGPointZero inView:self];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
+    else if (panGesture.state == UIGestureRecognizerStateCancelled ||
+             panGesture.state == UIGestureRecognizerStateEnded ||
+             panGesture.state == UIGestureRecognizerStateCancelled) {
+        // self.maxHandle.highlighted = NO;
+        // self.selectedMaxValue = [self roundValueToStepValue:self.selectedMinValue];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
