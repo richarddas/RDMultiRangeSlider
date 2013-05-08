@@ -3,9 +3,9 @@ Pod::Spec.new do |s|
   s.version      = '0.1'
   s.authors      = { 'Richard Das' => 'richard@richarddas.com' }
   s.license 	 = { :type => 'MIT', :file => 'LICENSE' }
-  s.homepage     = 'https://bitbucket.org/digitalannexe/rdmultirangeslider'
+  s.homepage     = 'https://github.com/richarddas/RDMultiRangeSlider'
   s.summary      = 'A custom slider UIControl with 2 handles.'
-  s.source       = { :git => 'https://digitalannexe@bitbucket.org/digitalannexe/rdmultirangeslider.git', :tag => "#{s.version}" }
+  s.source       = { :git => 'git@github.com:richarddas/RDMultiRangeSlider.git', :tag => "#{s.version}" }
   s.source_files = "RDMultiRangeSlider/Classes/*", "RDMultiRangeSlider/Resources/*"
   s.platform     = :ios
   s.frameworks   = 'UIKit', 'QuartzCore'
