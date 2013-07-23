@@ -14,18 +14,10 @@
 
 @property (readonly, nonatomic) CGFloat trackWidth;
 
-@property (nonatomic, strong) UIImageView *minHandle;
-@property (nonatomic, strong) UIImageView *maxHandle;
-@property (nonatomic, strong) UIImageView *track;
-@property (nonatomic, strong) UIImageView *trackSelected;
-
--(void)initRangeSlider;
--(void)minPanGestureEngaged:(UIGestureRecognizer *)gesture;
--(void)maxPanGestureEngaged:(UIGestureRecognizer *)gesture;
-
--(CGFloat)posForValue:(CGFloat)value;
--(CGFloat)valueForPos:(CGFloat)pos;
--(CGFloat)roundValueToStepValue:(CGFloat)value;
+@property (nonatomic) UIImageView *minHandle;
+@property (nonatomic) UIImageView *maxHandle;
+@property (nonatomic) UIImageView *track;
+@property (nonatomic) UIImageView *trackSelected;
 
 @end
 
@@ -35,31 +27,25 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 
 @implementation RDMultiRangeSlider
 
-@synthesize stepValue, trackCapInsets;
 
-
-#pragma mark - initialization
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if( self )
+    {
+        [self initRangeSlider];
+    }
+    return self;
+}
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (!self) {
-        return nil;
-    }
-    [self initRangeSlider];
-    return self;
-}
-
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (!self)
+    if( self )
     {
-        return nil;
+        [self initRangeSlider];
     }
-    [self initRangeSlider];
     return self;
 }
 
@@ -75,7 +61,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     self.trackCapInsets = UIEdgeInsetsMake( 0.0f, 9.0f, 0.0f, 9.0f);
     
     self.userInteractionEnabled = YES;
-
+    
     self.track = [[UIImageView alloc] init];
     [self setImageForTrack:self.trackImage];
     [self addSubview:self.track];
@@ -83,14 +69,13 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     self.trackSelected = [[UIImageView alloc] init];
     [self setImageForTrackSelected:self.trackSelectedImage];
     [self addSubview:self.trackSelected];
-
+    
     self.minHandle = [[UIImageView alloc] init];
     self.minHandle.contentMode = UIViewContentModeCenter;
     [self setImageForMinimumThumb:self.minThumbImage forState:UIControlStateNormal];
     [self setImageForMinimumThumb:self.minThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *minPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(minPanGestureEngaged:)];
     minPanGesture.delegate = self;
-    minPanGesture.cancelsTouchesInView = YES;
     [self.minHandle addGestureRecognizer:minPanGesture];
     self.minHandle.userInteractionEnabled = YES;
     [self addSubview:self.minHandle];
@@ -102,27 +87,55 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     [self setImageForMaximumThumb:self.maxThumbImageHover forState:UIControlStateHighlighted];
     UIPanGestureRecognizer *maxPanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(maxPanGestureEngaged:)];
     maxPanGesture.delegate = self;
-    maxPanGesture.cancelsTouchesInView = YES;
     [self.maxHandle addGestureRecognizer:maxPanGesture];
     self.maxHandle.userInteractionEnabled = YES;
     [self addSubview:self.maxHandle];
 }
 
 
--(void)layoutSubviews
+- (void)layoutSubviews
 {
+    [super layoutSubviews];
+    
+    // 2px padding either side (like UISlider)
+    CGFloat trackHPadding = 2.f;
+    
+    CGRect rect = CGRectZero;    
+    
+    // stretch the track image horizontally, and center it vertically
+    rect.origin.x = trackHPadding;
+    rect.origin.y = (CGRectGetHeight( self.frame ) - self.track.image.size.height) / 2.f;
+    rect.size.width = CGRectGetWidth( self.frame ) - ( trackHPadding * 2.f);
+    rect.size.height = self.track.image.size.height;
+    self.track.frame = rect;
+
+    
+    // make sure minHandle is at least 44x44
+    rect = self.minHandle.frame;
+    rect.size.width = fmaxf( CGRectGetWidth(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius * 2.f);
+    rect.size.height = fmaxf( CGRectGetHeight(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius * 2.f);
+    self.minHandle.frame = rect;
+    
     CGFloat minXPos = [self posForValue:self.selectedMinValue];
     self.minHandle.center = CGPointMake( minXPos , self.track.center.y);
+
+
+    // make sure maxHandle is at least 44x44
+    rect = self.maxHandle.frame;
+    rect.size.width = fmaxf( CGRectGetWidth(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius * 2.f);
+    rect.size.height = fmaxf( CGRectGetHeight(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius * 2.f);
+    self.maxHandle.frame = rect;
     
     CGFloat maxXPos = [self posForValue:self.selectedMaxValue];
     self.maxHandle.center = CGPointMake( maxXPos , self.track.center.y);
     
-	self.trackSelected.frame = CGRectMake(
-                                          self.minHandle.center.x,
-                                          (CGRectGetHeight( self.frame ) - self.trackSelected.image.size.height)/2.f,
-                                          self.maxHandle.center.x - self.minHandle.center.x,
-                                          self.trackSelected.image.size.height // match image
-                                          );
+
+    // selected track
+    rect.origin.x = self.minHandle.center.x;
+    rect.origin.y = (CGRectGetHeight( self.frame ) - self.trackSelected.image.size.height)/2.f;
+    rect.size.width = self.maxHandle.center.x - self.minHandle.center.x;
+    rect.size.height = self.trackSelected.image.size.height; // match image
+    self.trackSelected.frame = rect;
 }
 
 
@@ -132,15 +145,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     [self.track setImage:[image resizableImageWithCapInsets:self.trackCapInsets]];
     
-    // 2px padding either side (like UISlider)
-    CGFloat trackHPadding = 2.f;
-
-    // stretch the track image horizontally, and center it vertically
-    self.track.frame = CGRectMake(
-                                  trackHPadding,
-                                  (CGRectGetHeight( self.frame ) - image.size.height)/2.f,
-                                  CGRectGetWidth( self.frame ) - ( trackHPadding * 2.f),
-                                  image.size.height );
+    [self setNeedsDisplay];
 }
 
 
@@ -148,6 +153,8 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 {
     [self.trackSelected setImage:[image resizableImageWithCapInsets:self.trackCapInsets]];
     self.trackSelected.center = self.track.center;
+    
+    [self setNeedsDisplay];
 }
 
 
@@ -159,8 +166,8 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     } else {
         [self.minHandle setHighlightedImage:image ];
     }
-    // make sure it's at least 44x44
-    self.minHandle.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.minHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
+    
+    [self setNeedsDisplay];
 }
 
 
@@ -172,8 +179,8 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
     } else {
         [self.maxHandle setHighlightedImage:image ];
     }
-    // make sure it's at least 44x44
-    self.maxHandle.frame = CGRectMake(0, 0, MAX( CGRectGetWidth(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f), MAX( CGRectGetHeight(self.maxHandle.frame), kRPRangeSliderHandleTapTargetRadius*2.f));
+    
+    [self setNeedsDisplay];
 }
 
 
@@ -181,7 +188,7 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
 
 - (CGPoint)minHandleCenterPosition
 {
-    return self.minHandle.center;
+    return self.minHandle.center; ;
 }
 
 - (CGPoint)maxHandleCenterPosition
@@ -267,27 +274,25 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
         self.selectedMinValue += (trackPercentageChange/100.f) * range;
 
         [panGesture setTranslation:CGPointZero inView:self];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
     else if (panGesture.state == UIGestureRecognizerStateCancelled ||
              panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateCancelled) {
         self.minHandle.highlighted = NO;
         self.selectedMinValue = [self roundValueToStepValue:self.selectedMinValue];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
 
 - (void)maxPanGestureEngaged:(UIGestureRecognizer *)gesture
-{
+{    
     UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
     
     if (panGesture.state == UIGestureRecognizerStateBegan) {
         self.maxHandle.highlighted = YES;
     }
-    else if (panGesture.state == UIGestureRecognizerStateChanged)
-    {
+    if (panGesture.state == UIGestureRecognizerStateChanged) {
+        
         CGPoint pointInView = [panGesture translationInView:self];
         
         CGFloat range = self.maximumValue - self.minimumValue;
@@ -301,43 +306,9 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
              panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateCancelled) {
         self.maxHandle.highlighted = NO;
-        self.selectedMaxValue = [self roundValueToStepValue:self.selectedMinValue];
+        self.selectedMaxValue = [self roundValueToStepValue:self.selectedMaxValue];
         [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
-}
-
-
-- (void)trackPanGestureEngaged:(UIGestureRecognizer *)gesture
-{
-    UIPanGestureRecognizer *panGesture = (UIPanGestureRecognizer *)gesture;
-    
-    if (panGesture.state == UIGestureRecognizerStateBegan) {
-        // self.maxHandle.highlighted = YES;
-    }
-    else if (panGesture.state == UIGestureRecognizerStateChanged)
-    {
-        
-        CGPoint pointInView = [panGesture translationInView:self];
-
-        CGFloat range = self.maximumValue - self.minimumValue;
-        CGFloat trackPercentageChange = (pointInView.x / self.trackWidth)*100.f;
-        
-        CGFloat change = (trackPercentageChange/100.f) * range;
-        NSLog( @" value: %f", change );
-
-        self.selectedMaxValue += change;
-        self.selectedMinValue += change;
-        
-        [panGesture setTranslation:CGPointZero inView:self];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
-    else if (panGesture.state == UIGestureRecognizerStateCancelled ||
-             panGesture.state == UIGestureRecognizerStateEnded ||
-             panGesture.state == UIGestureRecognizerStateCancelled) {
-        // self.maxHandle.highlighted = NO;
-        // self.selectedMaxValue = [self roundValueToStepValue:self.selectedMinValue];
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
+   }
 }
 
 // delegate method

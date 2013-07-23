@@ -17,7 +17,6 @@
 		782EA79C17006166003936E2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA79B17006166003936E2 /* Default@2x.png */; };
 		782EA79E17006166003936E2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA79D17006166003936E2 /* Default-568h@2x.png */; };
 		782EA7A117006166003936E2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EA7A017006166003936E2 /* ViewController.m */; };
-		782EA7A417006166003936E2 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7A217006166003936E2 /* ViewController.xib */; };
 		782EA7B5170061C9003936E2 /* RDMultiRangeSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */; };
 		782EA7B6170061C9003936E2 /* bar-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7AD170061C9003936E2 /* bar-background.png */; };
 		782EA7B7170061C9003936E2 /* bar-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7AE170061C9003936E2 /* bar-background@2x.png */; };
@@ -27,6 +26,8 @@
 		782EA7BB170061C9003936E2 /* handle-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7B2170061C9003936E2 /* handle-hover@2x.png */; };
 		782EA7BC170061C9003936E2 /* handle.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7B3170061C9003936E2 /* handle.png */; };
 		782EA7BD170061C9003936E2 /* handle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 782EA7B4170061C9003936E2 /* handle@2x.png */; };
+		7844C114179E96AC00E999B9 /* Storyboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7844C113179E96AC00E999B9 /* Storyboard_iPhone.storyboard */; };
+		7844C116179E96BC00E999B9 /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7844C115179E96BB00E999B9 /* Storyboard_iPad.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +46,6 @@
 		782EA79D17006166003936E2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		782EA79F17006166003936E2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		782EA7A017006166003936E2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		782EA7A317006166003936E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		782EA7AA170061C9003936E2 /* RDMultiRangeSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RDMultiRangeSlider.m; path = Classes/RDMultiRangeSlider.m; sourceTree = "<group>"; };
 		782EA7AB170061C9003936E2 /* RDMultiRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RDMultiRangeSlider.h; path = Classes/RDMultiRangeSlider.h; sourceTree = "<group>"; };
 		782EA7AD170061C9003936E2 /* bar-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar-background.png"; sourceTree = "<group>"; };
@@ -56,6 +56,8 @@
 		782EA7B2170061C9003936E2 /* handle-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handle-hover@2x.png"; sourceTree = "<group>"; };
 		782EA7B3170061C9003936E2 /* handle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = handle.png; sourceTree = "<group>"; };
 		782EA7B4170061C9003936E2 /* handle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handle@2x.png"; sourceTree = "<group>"; };
+		7844C113179E96AC00E999B9 /* Storyboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPhone.storyboard; sourceTree = "<group>"; };
+		7844C115179E96BB00E999B9 /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +110,9 @@
 				782EA79717006165003936E2 /* AppDelegate.m */,
 				782EA79F17006166003936E2 /* ViewController.h */,
 				782EA7A017006166003936E2 /* ViewController.m */,
-				782EA7A217006166003936E2 /* ViewController.xib */,
 				782EA78E17006165003936E2 /* Supporting Files */,
+				7844C113179E96AC00E999B9 /* Storyboard_iPhone.storyboard */,
+				7844C115179E96BB00E999B9 /* Storyboard_iPad.storyboard */,
 			);
 			path = RDMultiRangeSlider;
 			sourceTree = "<group>";
@@ -207,7 +210,6 @@
 				782EA79A17006166003936E2 /* Default.png in Resources */,
 				782EA79C17006166003936E2 /* Default@2x.png in Resources */,
 				782EA79E17006166003936E2 /* Default-568h@2x.png in Resources */,
-				782EA7A417006166003936E2 /* ViewController.xib in Resources */,
 				782EA7B6170061C9003936E2 /* bar-background.png in Resources */,
 				782EA7B7170061C9003936E2 /* bar-background@2x.png in Resources */,
 				782EA7B8170061C9003936E2 /* bar-highlight.png in Resources */,
@@ -216,6 +218,8 @@
 				782EA7BB170061C9003936E2 /* handle-hover@2x.png in Resources */,
 				782EA7BC170061C9003936E2 /* handle.png in Resources */,
 				782EA7BD170061C9003936E2 /* handle@2x.png in Resources */,
+				7844C114179E96AC00E999B9 /* Storyboard_iPhone.storyboard in Resources */,
+				7844C116179E96BC00E999B9 /* Storyboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,14 +246,6 @@
 				782EA79117006165003936E2 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		782EA7A217006166003936E2 /* ViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				782EA7A317006166003936E2 /* en */,
-			);
-			name = ViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -280,7 +276,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -304,7 +300,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -317,7 +313,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RDMultiRangeSlider/RDMultiRangeSlider-Prefix.pch";
 				INFOPLIST_FILE = "RDMultiRangeSlider/RDMultiRangeSlider-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -328,7 +326,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RDMultiRangeSlider/RDMultiRangeSlider-Prefix.pch";
 				INFOPLIST_FILE = "RDMultiRangeSlider/RDMultiRangeSlider-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -16,14 +16,16 @@
 
 @implementation ViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    RDMultiRangeSlider *rangeSlider = [[RDMultiRangeSlider alloc] initWithFrame:CGRectInset( self.view.frame, 15, 0 )];
+    RDMultiRangeSlider *rangeSlider = [[RDMultiRangeSlider alloc] initWithFrame:CGRectInset( self.view.frame, 15, 15 )];
     [self.view addSubview:rangeSlider];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
