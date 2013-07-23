@@ -274,12 +274,14 @@ static CGFloat const kRPRangeSliderHandleTapTargetRadius = 22.f;
         self.selectedMinValue += (trackPercentageChange/100.f) * range;
 
         [panGesture setTranslation:CGPointZero inView:self];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
     else if (panGesture.state == UIGestureRecognizerStateCancelled ||
              panGesture.state == UIGestureRecognizerStateEnded ||
              panGesture.state == UIGestureRecognizerStateCancelled) {
         self.minHandle.highlighted = NO;
         self.selectedMinValue = [self roundValueToStepValue:self.selectedMinValue];
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
 
